@@ -3,9 +3,11 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import toast from 'react-hot-toast';
 import { ThmCntx } from '../data/ThemeContext';
+import { Cntx } from '../data/DataContext';
 
-export default function Modal({ open, setOpen, onAdd, setData, data }) {
+export default function Modal({ open, setOpen, onAdd }) {
     const { theme } = useContext(ThmCntx);
+    const { data, setData } = useContext(Cntx);
 
     function onAdd(newCard) {
         setData(prev => [...prev, newCard]);

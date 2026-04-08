@@ -5,7 +5,7 @@ function Header() {
     const { theme, setTheme } = useContext(ThmCntx)
     return (
         <header className="min-h-full">
-            <nav className="bg-[#213555]">
+            <nav className="bg-[#123458]">
                 <div className="mx-auto max-w-7xl px-4">
                     <div className="flex h-16 items-center justify-between">
                     <h1 className="text-lg sm:text-2xl font-bold tracking-wide text-white">Configurable Metrics Dashboard</h1>

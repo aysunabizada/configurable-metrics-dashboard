@@ -1,10 +1,5 @@
 @import "tailwindcss";
 
-.container{
-    max-width: 90%;
-    margin: auto;
-    padding: 25px 0;
-}
 .toggle svg {color: #f0ebeb}
 .toggle {
     display: grid;
@@ -27,12 +22,4 @@
 }
 .shadoww{
     box-shadow: rgba(255, 255, 255, 0.195) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-}
-
-.layout {
-    min-height: 550px;
-    background-image:
-        linear-gradient(to right, #ccc 1px, transparent 1px),
-        linear-gradient(to bottom, #ccc 1px, transparent 1px);
-    background-size: 300px 250px;
 }

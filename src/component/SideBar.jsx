@@ -11,7 +11,7 @@ function SideBar({ openSideBar, setOpenSideBar, handleVisiblity }) {
     return (
         <>
             <Transition.Root show={openSideBar} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={setOpenSideBar}>
+                <Dialog as="div" className="relative z-10000" onClose={setOpenSideBar}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-in-out duration-500"
@@ -43,7 +43,7 @@ function SideBar({ openSideBar, setOpenSideBar, handleVisiblity }) {
                                                     <div className="ml-3 flex h-7 items-center">
                                                         <button
                                                             type="button"
-                                                            className="rounded-md text-gray-400 hover:text-gray-100 cursor-pointer"
+                                                            className="rounded-md text-gray-400 hover:text-gray-300 cursor-pointer"
                                                             onClick={() => setOpenSideBar(false)}
                                                         >
                                                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />

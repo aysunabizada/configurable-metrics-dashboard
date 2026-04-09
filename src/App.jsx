@@ -7,7 +7,7 @@ function App() {
     return (
         <>
             <Toaster
-                position="bottom-right"
+                position="bottom-left"
                 reverseOrder={false}
             />
             <Routes>

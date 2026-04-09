@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ThmCntx } from "../data/ThemeContext";
 import { Cntx } from "../data/DataContext";
 import Card from "./Card";
@@ -6,12 +6,19 @@ import toast from "react-hot-toast";
 import Modal from "./Modal";
 import SideBar from "./SideBar";
 import { CiSquarePlus } from "react-icons/ci";
+import { useDragAndDrop } from "@formkit/drag-and-drop/react";
+import { animations } from "@formkit/drag-and-drop";
 
 function Home() {
     const { theme } = useContext(ThmCntx);
     const { data, setData } = useContext(Cntx);
     const [open, setOpen] = useState(false);
     const [openSideBar, setOpenSideBar] = useState(false)
+
+    useEffect(() => {
+        const visible = data.filter(item => item.visible);
+        setItems(visible);
+    }, [data]);
 
     function onRemove(id) {
         const updatedData = data.filter(item => item.id !== id);
@@ -36,6 +43,16 @@ function Home() {
     }
 
     const visibleData = data.filter(item => item.visible);
+    const [parent, items, setItems] = useDragAndDrop(
+        visibleData,
+        {
+            plugins: [animations()],
+            onSort: (newList) => {
+                const hidden = data.filter(item => !item.visible);
+                setData([...newList, ...hidden])
+            }
+        }
+    );
 
     return (
         <>
@@ -67,23 +84,24 @@ function Home() {
                         ＋ Add a New Card
                     </button>
                 </div>
-                <div className="mx-auto max-w-7xl py-1 px-4">
-                    <div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-1">
-                        {visibleData.length != 0 ? visibleData.map((item) => (
-                            <div className={`p-3 min-h-50 rounded-md border-2 border-dashed ${theme ? 'dark:border-gray-200' : 'border-gray-700'} flex items-center justify-center`}>
-                                <Card
-                                    item={item}
-                                    handleVisiblity={handleVisiblity}
-                                    onRemove={onRemove}
-                                />
-                            </div>
-                        )) :
+                <div className="mx-auto max-w-7xl py-3 px-4">
+                    <div ref={parent} className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-1">
+                        {items.length != 0 ?
+                            items.map((item) =>
+                                <div key={item.id} className={`p-3 min-h-50 rounded-md border-2 border-dashed ${theme ? 'dark:border-gray-200' : 'border-gray-700'} flex items-center justify-center`}>
+                                    <Card
+                                        item={item}
+                                        handleVisiblity={handleVisiblity}
+                                        onRemove={onRemove}
+                                    />
+                                </div>) :
                             <div
                                 onClick={() => setOpen(true)}
                                 className={`min-h-50 cursor-pointer border-2 rounded-md border-dashed 
                                 ${theme ? 'dark:border-gray-200 text-gray-200' : 'border-gray-700 text-gray-700'} flex items-center justify-center`}>
                                 <CiSquarePlus className="text-5xl " />
-                            </div>}
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

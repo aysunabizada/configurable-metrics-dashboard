@@ -11,7 +11,7 @@ function Card({ item, onRemove, handleVisiblity }) {
         <div key={item.id} className={` min-h-48 w-full cursor-move hover:shadow-xl transition-all duration-200 rounded border border-gray-300 bg-gray-100 
         ${theme ? "dark:bg-gray-100 text-black" : "bg-mist-900 border-gray-900 text-white"}`}>
             <div className="flex justify-between px-3 py-2 border-b border-b-gray-300">
-                <p className="font-medium text-sm">{item.title}</p>
+                <p className="font-medium text-sm capitalize">{item.title}</p>
                 <div className="flex gap-2">
                     <FaEye onClick={() => handleVisiblity(item.id)} className="text-xl text-gray-400 cursor-pointer transition-all duration-200 hover:text-gray-600 " />
                     <FaXmark onClick={() => onRemove(item.id)} className="text-xl text-gray-400 cursor-pointer transition-all duration-200 hover:text-gray-600 " />

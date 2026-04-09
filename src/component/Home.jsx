@@ -15,11 +15,6 @@ function Home() {
     const [open, setOpen] = useState(false);
     const [openSideBar, setOpenSideBar] = useState(false)
 
-    useEffect(() => {
-        const visible = data.filter(item => item.visible);
-        setItems(visible);
-    }, [data]);
-
     function onRemove(id) {
         const updatedData = data.filter(item => item.id !== id);
         setData(updatedData);
@@ -42,17 +37,26 @@ function Home() {
         setData(prev => [...prev, newCard]);
     }
 
-    const visibleData = data.filter(item => item.visible);
     const [parent, items, setItems] = useDragAndDrop(
-        visibleData,
+        data.filter(item => item.visible),
         {
             plugins: [animations()],
-            onSort: (newList) => {
-                const hidden = data.filter(item => !item.visible);
-                setData([...newList, ...hidden])
-            }
+            onSort: () => {}
         }
     );
+
+    useEffect(() => {
+        const visible = data.filter(item => item.visible);
+        setItems(visible);
+    }, [data]);
+
+    function saveLayout() {
+        const hidden = data.filter(item => !item.visible);
+        const finalLayout = [...items, ...hidden];
+        setData(finalLayout)
+        localStorage.setItem("dashboard_layout", JSON.stringify(finalLayout));
+        toast.success("Layout saved successfully!")
+    }
 
     return (
         <>
@@ -67,21 +71,21 @@ function Home() {
                 onAdd={onAdd}
             />
             <div className={`${theme ? "dark:bg-white text-black" : "bg-[#222831] text-white"} min-h-screen`}>
-                <div className="mx-auto max-w-7xl py-6 px-4 flex sm:flex-row flex-col gap-2 items-center justify-between">
-                    <div className="relative">
-                        <button
-                            onClick={() => { setOpenSideBar(true) }}
-                            className={`dark:bg-[#5E7AC4] text-white hover:bg-blue-400 transition-all duration-200 rounded-md py-2.5 px-3.5 cursor-pointer font-semibold`}>
-                            Show Hidden Cards List
-                        </button>
-                        <span className="bg-[#ed7e2a] absolute -top-2.5 -right-2.5 flex justify-center items-center text-white min-h-7 min-w-7 rounded-full">
-                            {data.filter(item => !item.visible).length}
-                        </span>
-                    </div>
+                <div className="mx-auto max-w-7xl py-6 px-4 flex sm:flex-row flex-col gap-2">
                     <button
                         onClick={() => { setOpen(true) }}
                         className={`dark:bg-[#ed7e2a] text-white hover:bg-amber-500 transition-all duration-200 rounded-md py-2.5 px-3.5 cursor-pointer font-semibold`}>
                         ＋ Add a New Card
+                    </button>
+                    <button
+                        onClick={saveLayout}
+                        className={`dark:bg-[#B153D7] text-white hover:bg-[#9B8EC7] transition-all duration-200 rounded-md py-2.5 px-3.5 cursor-pointer font-semibold`}>
+                        💾 Save Layout
+                    </button>
+                    <button
+                        onClick={() => { setOpenSideBar(true) }}
+                        className={`dark:bg-[#5E7AC4] text-white hover:bg-blue-400 transition-all duration-200 rounded-md py-2.5 px-3.5 cursor-pointer font-semibold`}>
+                        Show Hidden Cards List ( {data.filter(item => !item.visible).length} )
                     </button>
                 </div>
                 <div className="mx-auto max-w-7xl py-3 px-4">

@@ -5,20 +5,15 @@ export const Cntx = createContext();
 
 function DataContext({ children }) {
     const [data, setData] = useState(() => {
-        const saved = localStorage.getItem("dashboard_layout")
+        const saved = localStorage.getItem("dashboard_layout");
         return saved ? JSON.parse(saved) : [];
-    })
-
-    useEffect(() => {
-        localStorage.setItem("dashboard_layout", JSON.stringify(data));
-    }, [data])
+    });
 
     useEffect(() => {
         if (data.length === 0) {
-            axios
-                .get("https://69d4e58cd396bd74235decb0.mockapi.io/mockMetrics")
+            axios.get("https://69d4e58cd396bd74235decb0.mockapi.io/mockMetrics")
                 .then(res => setData(res.data))
-                .catch(err => console.error("Xəta baş verdi:", err));
+                .catch(err => console.error("Xəta:", err));
         }
     }, []);
 

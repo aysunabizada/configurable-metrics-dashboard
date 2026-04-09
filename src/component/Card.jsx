@@ -8,7 +8,7 @@ function Card({ item, onRemove, handleVisiblity }) {
     
 
     return (
-        <div key={item.id} className={` min-h-48 cursor-move hover:shadow-xl transition-all duration-200 rounded border border-gray-300 bg-gray-100 
+        <div key={item.id} className={` min-h-48 w-full cursor-move hover:shadow-xl transition-all duration-200 rounded border border-gray-300 bg-gray-100 
         ${theme ? "dark:bg-gray-100 text-black" : "bg-mist-900 border-gray-900 text-white"}`}>
             <div className="flex justify-between px-3 py-2 border-b border-b-gray-300">
                 <p className="font-medium text-sm">{item.title}</p>
